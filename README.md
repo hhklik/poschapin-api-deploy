@@ -1,7 +1,7 @@
-# poschapin-api
-Tutorial para realizar un pago por medio de la API REST poschapin 
+# Deployment poschapin-api for PHP
+Este tutorial esta hecho para la integracion de API POSchapin en `PHP`, estamos trabajando para otros deployment con los lenguajes mas populares 
 
-### Parámetros de autenticación de API
+## Parámetros de autenticación de API
 Para proteger completamente la autenticidad de las solicitudes y respuestas de la API de un socio,
 Se deben usar llaves de seguridad cuando se usa el método de redireccionamiento del navegador. No puedes usar
 un nombre de usuario y contraseña para la autenticación de API de redireccionamiento del navegador.
@@ -42,6 +42,33 @@ hash con un algoritmo md5.
   ...
   <form>
 ```
+## Hash de respuesta
+
+Después de realizar una llamada a la API, se devolverá inmediatamente un hash único en el
+respuesta. El hash de respuesta protege la autenticidad de los datos devueltos al
+servidores del socio. Realizar una verificación md5 adicional en el hash de respuesta asegurará
+que la respuesta es auténtica. Específicamente, los siguientes campos están protegidos por la
+hash de respuesta:
+
+- OrderID
+- Amount
+- Response
+- TransactionID
+- AVS_Response
+- CVV_Response
+
+### Campos adicionales devueltos:
+
+- time
+  - La puerta de enlace generará una hora en el formato descrito anteriormente. La aplicación del socio puede utilizar este tiempo para determinar si la respuesta es obsoleta.
+- amount
+  - La cantidad se repetirá en la respuesta.
+- hash
+  - El hash debe ser los valores de las siguientes variables delimitadas por pipes `|` y hash con un algoritmo md5.
+
+`orderid|amount|response|transactionid|avsresponse|cvvresponse|time|privatekey`
+
+Las llaves se puede obtener en la sección Llaves de seguridad de la billeta en su panel de control de POSchapin
 
 ## Transaction POST URL
 nota: No se puede utilizar CUrl (PHP), dado que se tiene que recolectar la ip del cliente final, todo se trabaja con redirecciones
@@ -49,7 +76,7 @@ nota: No se puede utilizar CUrl (PHP), dado que se tiene que recolectar la ip de
 https://pos-chapin.appspot.com/transaccion/json
 ```
 
-### Transaction Variables
+### Variables de Transaccion
 
 | Variable name | required* | format | description | 
 | :---         |     :---:      |     :---:     |  :---  |
@@ -77,16 +104,87 @@ https://pos-chapin.appspot.com/transaccion/json
 
 | Variable name | format | description | 
 | :---     |     :---:     |  :---  |
-| response | 1 / 2 / 3 | - 1 = Transaction Approved - 2 = Transaction Declined - 3 = Error in transaction data or system error |
+| response | 1 / 2 / 3 | 1 = Transaction Approved /// 2 = Transaction Declined /// 3 = Error in transaction data or system error |
+|responsetext| | Textual response|
+|authcode| | Transaction authorization code|
+|transactionid || Payment Gateway transaction id|
+|hash ||The hash should be the values of defined variables delimited by pipes and hashed with an md5 algorithm.|
+|avsresponse |C| |AVS Response Code (See Appendix 1)|
+|cvvresponse |C|CVV Response Code (See Appendix 2)|
+|orderid||The original order id passed in the transaction request.|
+|response_code| C | Numeric mapping of processor responses (See Appendix 3)|
+
+## informacion de prueba
+||| 
+|:---| :---|
+|Visa Credit Card | 4111111111111111|
+|MasterCard Card | 5431111111111111|
+|DiscoverCard Card| 6011601160116611|
+|American Express Card | 341111111111111|
+|Credit Card Expiration| Cualquier fecha de vencimiento válida
+|Amount| >1.00|
+
+## Como saber si la conexion esta lisa?
+Cuando el sistema retorne tarjeta declinada, se sabra que ya el API esta respondiendo correctamente, si no es asi consultar al equipo de tecnico de POSchapin
 
 
+## Appendix 1 – AVS Response Codes
+||| 
+|:---| :---|
+|X| Exact match, 9-character numeric ZIP|
+|Y |Exact match, 5-character numeric ZIP|
+|D| “|
+|M| “|
+|A |Address match only|
+|B |“|
+|W |9-character numeric ZIP match only|
+|Z |5-character Zip match only|
+|P |“|
+|L| “|
+|N |No address or ZIP match|
+|C |“|
+|U| Address unavailable|
+|G |Non-U.S. Issuer does not participate|
+|I |“|
+|R |Issuer system unavailable|
+|E| Not a mail/phone order|
+|S |Service not supported|
+|0 |AVS Not Available|
+|O| “|
+|B |“|
+
+## Appendix 2 – CVV Response Codes
+||| 
+|:---| :---|
+|M |CVV2/CVC2 Match|
+|N |CVV2/CVC2 No Match|
+|P |Not Processed|
+|S| Merchant has indicated that CVV2/CVC2 is not present on card|
+|U |Issuer is not certified and/or has not provided Visa encryption keys|
 
 
+## Gateway response
+|||
+|:---|:---|
+|100|Transaction was approved |
+|200|Transaction was declined by processor|
+|300|Transaction was rejected by gateway|
+|400|Transaction Error Returned by processor |
 
-
-
-
-
+|||
+|:---|:---|
+|612|Parameters missing see your guide|
+|613|expired hash|
+|614|amount format incorrect|
+|615| Invalid Hash |
+|616|transaction error returned by processor|
+|617|stop data invalid, go get a code for children|
+|6311|ccexp invalid|
+|6312|ccexp not available|
+|6313|cvv invalid|
+|6314|cvv not available|
+|6315|card invalid|
+|6316|card not available|
 
 
 
