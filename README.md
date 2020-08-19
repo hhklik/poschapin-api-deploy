@@ -1,3 +1,5 @@
+<p align="center"><a href="https://poschapin.com/"><img width="500"src="https://user-images.githubusercontent.com/37667605/90585553-5a056800-e192-11ea-9ff1-77eb97a86c64.png" alt="WooCommerce"></a></p>
+
 # Deployment poschapin-api for PHP
 Este tutorial esta hecho para la integracion de API POSchapin en `PHP`, estamos trabajando para otros deployment con los lenguajes mas populares 
 
@@ -71,7 +73,7 @@ hash de respuesta:
 Las llaves se puede obtener en la sección Llaves de seguridad de la billeta en su panel de control de POSchapin
 
 ## Transaction POST URL
-nota: No se puede utilizar CUrl (PHP), dado que se tiene que recolectar la ip del cliente final, todo se trabaja con redirecciones
+nota: No se puede utilizar CUrl (PHP), dado que se tiene que recolectar la ip del cliente final, todo se trabaja CON HttpPOST
 ```
 https://pos-chapin.appspot.com/transaccion/json
 ```
