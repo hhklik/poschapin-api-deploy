@@ -83,7 +83,7 @@ https://pos-chapin.appspot.com/transaccion/json
 | Variable name | required* | format | description | 
 | :---         |     :---:      |     :---:     |  :---  |
 | key_public   | requerido     |     | ID de clave de seguridad del panel de control del socio |
-| amount     | requerido      | X.XX      | Importe total a cobrar (es decir, 10,00) | 
+| amount     | requerido      | X.XX      | Importe total a cobrar (es decir, 10.00) | 
 | redirect     | requerido      | https://...      | La URL a la que se redirigirá al titular de la tarjeta. Esta URL también debe analizar y responder a la variables de respuesta incluidas en la consulta GET sobre la redirección. | 
 | hash     | requerido      |      | MD5 variable Hash |
 | time | requerido | Unix Time Stamp | Segundos desde el 1 de enero de 1970 (época Unix) |
