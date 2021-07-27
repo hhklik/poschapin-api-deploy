@@ -77,6 +77,17 @@ nota: No se puede utilizar CUrl (PHP), dado que se tiene que recolectar la ip de
 ```
 https://pos-chapin.appspot.com/api/transaccion/redirect
 ```
+#### Ruta Deprecada
+si usted utilizaba la siguiente ruta:
+```
+@deprecated https://pos-chapin.appspot.com/transaccion/json
+```
+Actualmente se da soporte para esta ruta `@deprecated https://pos-chapin.appspot.com/transaccion/json`, pero cualquier cambio a futuro, no lo contendra
+
+Cambie a
+```
+https://pos-chapin.appspot.com/api/transaccion/redirect
+```
 
 ### Variables de Transaccion
 
