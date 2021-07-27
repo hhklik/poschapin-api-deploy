@@ -73,18 +73,18 @@ hash de respuesta:
 Las llaves se puede obtener en la sección Llaves de seguridad de la billeta en su panel de control de POSchapin
 
 ## Transaction POST URL REDIRECT
-nota: No se puede utilizar CUrl (PHP), dado que se tiene que recolectar la ip del cliente final, todo se trabaja CON HttpPOST
+Nota: No se puede utilizar CURL (PHP), dado que se tiene que recolectar la ip del cliente final, todo se trabaja CON HttpPOST
 ```
 https://pos-chapin.appspot.com/api/transaccion/redirect
 ```
 #### Ruta Deprecada
-si usted utilizaba la siguiente ruta:
+si usted utiliza la siguiente ruta:
 ```
 @deprecated https://pos-chapin.appspot.com/transaccion/json
 ```
 Actualmente se da soporte para esta ruta `@deprecated https://pos-chapin.appspot.com/transaccion/json`, pero cualquier cambio a futuro, no lo contendra
 
-Cambie a
+Sustituya por:
 ```
 https://pos-chapin.appspot.com/api/transaccion/redirect
 ```
