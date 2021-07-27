@@ -89,6 +89,17 @@ Sustituya por:
 https://pos-chapin.appspot.com/api/transaccion/redirect
 ```
 
+### Configurar public_key y private_key
+- Solicitar creación de partner(Socio de negocios) en **admin@poschapin.com** Si ya es partner(Socio de negocios) salte este paso
+- Con acceso a panel de control de POSchapin, hacer lo siguiente `wallet > Elegir wallet y dar click en EDIT` y en esta parte al entrar se visualizara el **public_key y private_key** para recolectar pagos para dicha billetera.
+  - Si no logras procesar tu pago, en panel de control de POSchapin en `wallet > Elegir wallet y dar click en EDIT` vas a encontrar el siguiente icono <img src="https://poschapin.com/wp-content/assets/img/key_reload.svg" width="25" alt="reload_keys"> dando click en este icono y luego actualizar se podra crear otra **private_key** o **public_key**
+- En el panel de control de **wordpress(su tienda en linea)** ingrese a `WooCommerce > settings > click en el tab o ficha payments > click en boton manager` 
+- Copiar y pegar **Public_key**
+- Copiar y pegar **Private_key**
+- Click en boton **Save Changes**
+
+Y listo ya puede comenzar a recolectar pagos.
+
 ### Variables de Transaccion
 
 | Variable name | required* | format | description | 
