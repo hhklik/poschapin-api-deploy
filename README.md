@@ -72,10 +72,10 @@ hash de respuesta:
 
 Las llaves se puede obtener en la sección Llaves de seguridad de la billeta en su panel de control de POSchapin
 
-## Transaction POST URL
+## Transaction POST URL REDIRECT
 nota: No se puede utilizar CUrl (PHP), dado que se tiene que recolectar la ip del cliente final, todo se trabaja CON HttpPOST
 ```
-https://pos-chapin.appspot.com/transaccion/json
+https://pos-chapin.appspot.com/api/transaccion/redirect
 ```
 
 ### Variables de Transaccion
