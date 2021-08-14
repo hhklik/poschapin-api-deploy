@@ -263,7 +263,7 @@ hash con un algoritmo md5.
 | Variable name | required* | format | description | 
 | :---         |     :---:      |     :---:     |  :---  |
 | key_public   | requerido     |    | API key de wallet del socio de negocios de POSchapin |
-| operationid   | requerido     | <text>_<# operacion>   | codigo de operacion de la orden |
+| operationid   | requerido     | `<text>`_<# operacion>   | codigo de operacion de la orden |
 | hash     | requerido      |      | MD5 variable Hash |
 | time | requerido | Unix Time Stamp | Segundos desde el 1 de enero de 1970 (época Unix) |
   
@@ -274,7 +274,8 @@ hash con un algoritmo md5.
 | Variable name | format | description | 
 | :---     |     :---:     |  :---  |
 | response | 1 / 2 / 3 | 1 = Transaction Approved /// 2 = Transaction Declined /// 3 = Error in transaction data or system error |
-|responsetext| | Textual response|
+|response
+| | Textual response|
 |authcode| | Transaction authorization code|
 |transactionid || Payment Gateway transaction id|
 |hash ||The hash should be the values of defined variables delimited by pipes and hashed with an md5 algorithm.|
