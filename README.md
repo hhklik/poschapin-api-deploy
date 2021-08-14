@@ -74,7 +74,7 @@ hash de respuesta:
 - hash
   - El hash debe ser los valores de las siguientes variables delimitadas por pipes `|` y hash con un algoritmo md5.
 
-`orderid|amount|response|transactionid|avsresponse|cvvresponse|time|privatekey`
+`<orderid>|<amount>|<response>|<transactionid>|<avsresponse>|<cvvresponse>|<time>|<privatekey>`
 
 Las llaves se puede obtener en la sección Llaves de seguridad de la billeta en su panel de control de POSchapin
 
@@ -231,6 +231,139 @@ Cuando el sistema retorne tarjeta declinada, se sabra que ya el API esta respond
 |6314|cvv not available|
 |6315|card invalid|
 |6316|card not available|
+
+
+# Procedimiento para anular una transacccion
+
+## Parámetros de autenticación para Anular una transacccion
+
+- operationid
+  - Este parametro es devuelto al a la hora de procesar un pago con el API de POSchapin
+
+- time 
+  - Un valor de tiempo también se asocia con la solicitud para proteger contra hashes
+utilizado durante un período prolongado de tiempo. La puerta de enlace rechazará los tiempos que se terminaron
+15 minutos de edad. El tiempo debe pasarse en el campo 'tiempo' y debe representar
+una marca de tiempo de estilo C / Unix (número de segundos desde el 1 de enero de 1970 **UTC**, época)
+- privatekey
+  - clave privada de la wallet que va utilizar para recolectar pagos
+  - Esta la encuentra en `panel de control > wallet > edit wallet` alli podra observar tando `key_public` y `key_private`
+- hash 
+  - El hash debe ser el valor de las siguientes variables delimitadas por pipes `|` y
+hash con un algoritmo md5.
+  - `<operationid>|<time>|<key_private>`
+
+### ruta para anular una transacccion
+
+`https://pos-chapin.appspot.com/api/transaccion/void`
+
+
+### Variables de Anulacion
+
+| Variable name | required* | format | description | 
+| :---         |     :---:      |     :---:     |  :---  |
+| key_public   | requerido     |    | API key de wallet del socio de negocios de POSchapin |
+| operationid   | requerido     | <text>_<# operacion>   | codigo de operacion de la orden |
+| hash     | requerido      |      | MD5 variable Hash |
+| time | requerido | Unix Time Stamp | Segundos desde el 1 de enero de 1970 (época Unix) |
+  
+## Variables de respuesta a la anulacion
+
+### Respuesta estándar
+  
+| Variable name | format | description | 
+| :---     |     :---:     |  :---  |
+| response | 1 / 2 / 3 | 1 = Transaction Approved /// 2 = Transaction Declined /// 3 = Error in transaction data or system error |
+|responsetext| | Textual response|
+|authcode| | Transaction authorization code|
+|transactionid || Payment Gateway transaction id|
+|hash ||The hash should be the values of defined variables delimited by pipes and hashed with an md5 algorithm.|
+|avsresponse |C| |AVS Response Code (See Appendix 1)|
+|cvvresponse |C|CVV Response Code (See Appendix 2)|
+|orderid||The original order id passed in the transaction request.|
+|response_code| C | Numeric mapping of processor responses (See Appendix 3)|
+
+### Hash de respuesta
+
+Después de realizar una llamada a la API, se devolverá inmediatamente un hash único en el
+respuesta. El hash de respuesta protege la autenticidad de los datos devueltos al
+servidores del socio. Realizar una verificación md5 adicional en el hash de respuesta asegurará
+que la respuesta es auténtica. Específicamente, los siguientes campos están protegidos por la
+hash de respuesta:
+
+- response
+- transactionid
+- operationid
+- time
+- hash
+ 
+### Validar Hash de respuesta
+
+  `MD5(<response>|<operationid>|<transactionid>|key_private) = <hash en la respuesta>`
+
+  
+## posibles respuestgas
+ 
+### repuesta satisfactoria
+
+```
+  {
+    "response": "1",
+    "responsetext": "Transaction Void Successful",
+    "response_code": "100",
+    "authcode": "<#number>",
+    "transactionid": "<#number>",
+    "operationid": "poschapin_10329",
+    "avsresponse": "",
+    "cvvresponse": "",
+    "orderid": "poschapin",
+    "type": "void",
+    "amount": "",
+    "trace": "",
+    "void_text": "La orden fue cancelada",
+    "void_time": 1628946111,
+    "hash": "32c1eb5096e68180e5463261e39d2135",
+    "time": 1628946112
+}
+```
+  
+### La orden ya se encuentra anualda
+```
+  {
+    "response": 3,
+    "responsetext": "La orden u operacion ya se encuentra anulada || The order or operation is already canceled",
+    "response_code": 2312,
+    "authcode": "",
+    "transactionid": "",
+    "operationid": "",
+    "avsresponse": "",
+    "cvvresponse": "",
+    "orderid": "",
+    "type": "",
+    "amount": "",
+    "trace": "2312,2119,2202",
+    "error": true
+}
+```
+  
+### codigos de error
+  
+
+| response_code | description | 
+| :---    |  :---  |
+|8004| No se encuentra la wallet con ese key_public|
+|2310| La operacion enviada no pertenece a esta billetera|
+|2105|Hash invalido|
+|2101|hash expirado|
+  
+NOTA: 
+- Si esta implementando, varias wallets en el mismo sistema , se recomienda crear una tabla par lista de billeteras que van utilizar, con el fin de identifcar las ordenes con la billetera correspondiente, por temas de seguridad, dentro del panel de control de poschapin se puede cambiar la llave `publica` y `privada` por lo cual al sistema tendran que cambiar las llaves, pero sus ordenes tiene que seguir amarradas un identificador dentro de su sistema y no al `llave publica` la cual puede cambiar a lo largo de tiempo por motivos se seguridad.
+- Ahora si solo va implementar una sola billetera, solo asegurese de dejar configurable la `llave publica` y `llave privada` y no queda en su codigo, porque estas llaves pueden cambiar por motivos de seguridad, como solo tiene una billetera implementada no se complica porque para anular envia la nueva `llave publica` por si ha cambiado.
+
+
+
+
+
 
 
 
