@@ -135,8 +135,8 @@ NOTA: si esta utilizando *HttpPost Direct* (respuestas en JSON) Tambien seleccio
 |card_number| requerido | |Número de tarjeta de crédito|
 |ccexp| requerido |MMYY| Vencimiento de la tarjeta de crédito (es decir, 0705 = 7/2005) |
 |cvv| recomendado | | Código de Seguridad de la Tarjeta|
-|first_name|recomendado| | Nombre del titular de la tarjeta|
-|last_name|recomendado| | apellido del titular de la tarjeta|
+|first_name|requerido| | Nombre del titular de la tarjeta (completo)|
+|last_name|recomendado(deprecado)| | Ingresar el nombre completo del tarjetahabiente en el campo first_name|
 |address1|recomendado | |Dirección de facturación de la tarjeta|
 |city| recomendado | | Ciudad de facturación de la tarjeta|
 |state|recomendado|CC| Estado de facturación de la tarjeta (abreviatura de 2 caracteres)|
