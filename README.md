@@ -209,30 +209,6 @@ Cuando el sistema retorne tarjeta declinada, se sabra que ya el API esta respond
 |U |Issuer is not certified and/or has not provided Visa encryption keys|
 
 
-## Gateway response
-|||
-|:---|:---|
-|100|Transaction was approved |
-|200|Transaction was declined by processor|
-|300|Transaction was rejected by gateway|
-|400|Transaction Error Returned by processor |
-
-|||
-|:---|:---|
-|612|Parameters missing see your guide|
-|613|expired hash|
-|614|amount format incorrect|
-|615| Invalid Hash |
-|616|transaction error returned by processor|
-|617|stop data invalid, go get a code for children|
-|6311|ccexp invalid|
-|6312|ccexp not available|
-|6313|cvv invalid|
-|6314|cvv not available|
-|6315|card invalid|
-|6316|card not available|
-
-
 # Procedimiento para anular una transacccion
 
 ## Parámetros de autenticación para Anular una transacccion
@@ -347,15 +323,54 @@ hash de respuesta:
 }
 ```
   
-### codigos de error
+### Gateway Response
   
 
 | response_code | description | 
-| :---    |  :---  |
-|8004| No se encuentra la wallet con ese key_public|
-|2310| La operacion enviada no pertenece a esta billetera|
-|2105|Hash invalido|
-|2101|hash expirado|
+|:---| :---|
+|8004| wallet not found |
+|9001| invalid user |
+|* 9003| Parameters missing see your guide |
+|9004| expired hash |
+|9006| Invalid Hash |
+|9009| Authentication Failed |
+|9010| unspecified redirect |
+|9011| invalid redirect |
+|9018| Invalid hash |
+|9019| Invalid Time |
+|9065| Amount format incorrect X.XX, minimum amount 1.00 |
+|1101| Order not created |
+|1102| Order not updated |
+|1110| order code not found |
+|1113| order code not found secure |
+|||
+|1200|invalid expiration date|
+|1201|missing expiration date|
+|1202|invalid security code|
+|1203|missing security code|
+|1204|invalid card number|
+|1205|missing card number|
+|||
+|1402|Duplicate transaction|
+|||
+|1601|transaction error returned by processor|
+|||
+|2003|The Partner is not authorized to make transactions|
+|||
+|2101|expired hash|
+|2105|Invalid Hash|
+|2114|Authentication Failed|
+|2116|The time allowed for cancellation has been exceeded|
+|||
+|2310|The operation sent does not belong to this wallet|
+|2312|The order or operation is already canceled|
+
+- `* Para el error 9003` send data:
+   - orderid
+   - amount
+   - time
+   - hash
+   - redirect
   
 NOTA: 
 - Si esta implementando, varias wallets en el mismo sistema , se recomienda crear una tabla par lista de billeteras que van utilizar, con el fin de identifcar las ordenes con la billetera correspondiente, por temas de seguridad, dentro del panel de control de poschapin se puede cambiar la llave `publica` y `privada` por lo cual al sistema tendran que cambiar las llaves, pero sus ordenes tiene que seguir amarradas un identificador dentro de su sistema y no al `llave publica` la cual puede cambiar a lo largo de tiempo por motivos se seguridad.
