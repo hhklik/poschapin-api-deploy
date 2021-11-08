@@ -323,7 +323,7 @@ hash de respuesta:
 }
 ```
   
-### Gateway Response
+### Error code response
   
 
 | response_code | description | 
