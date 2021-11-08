@@ -322,8 +322,15 @@ hash de respuesta:
     "error": true
 }
 ```
+
+## Gateway response
+| response_code | description | response |
+| :--- | :--- | :---|
+|100|	Transaction was approved| 1 |
+|200	|Transaction was declined by processor| 2 |
+|Error code response	|Transaction was rejected by gateway| 3 |
   
-### Error code response
+## Error code response (Gateway response 3 )
   
 
 | response_code | description | 
