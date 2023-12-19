@@ -131,7 +131,7 @@ NOTA: si esta utilizando *HttpPost Direct* (respuestas en JSON) Tambien seleccio
 | orderid     | requerido      |  `<texto>_<numero>` , `<numero>`  | valor numemrico o alfanumerico ej. orden_100 , 105 |
 | hash     | requerido      |      | MD5 variable Hash |
 | time | requerido | Unix Time Stamp | Segundos desde el 1 de enero de 1970 (época Unix) |
-| currency_code| opcional | codigo ISO-4217 | ej. XXX,USD |
+| currency_code| requerido (since 2023 December) | codigo ISO-4217 | ej. XXX,USD |
 |email| recomendado| | Billing email address|
 |card_number| requerido | |Número de tarjeta de crédito|
 |ccexp| requerido |MMYY| Vencimiento de la tarjeta de crédito (es decir, 0705 = 7/2005) |
