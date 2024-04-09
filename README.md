@@ -43,7 +43,7 @@ hash con un algoritmo md5.
   $hash = md5($string_hash);
   
   <?php $time = time(); ?>
-  <form action="https://pos-chapin.appspot.com/transaccion/json">
+  <form action="https://pos-chapin.appspot.com/api/transaccion/redirect">
   ...
   <input type=text name=key_public value=a74524fdcccf575b9219572978855df8>
   <input type=text name=hash value=<?php echo $hash?>>
