@@ -140,7 +140,7 @@ NOTA: si esta utilizando *HttpPost Direct* (respuestas en JSON) Tambien seleccio
 |last_name|recomendado(deprecado)| | Ingresar el nombre completo del tarjetahabiente en el campo first_name|
 |address1|recomendado | |Dirección de facturación de la tarjeta|
 |city| recomendado | | Ciudad de facturación de la tarjeta|
-|state|recomendado|CC| Estado de facturación de la tarjeta (abreviatura de 2 caracteres)|
+|state|recomendado|CC(ISO-3166-2)| Estado de facturación de la tarjeta (abreviatura de 2 caracteres)|
 |zip|recomendado| | Código postal de facturación de la tarjeta|
 |country|recomendado |CC (ISO-3166)| País de facturación de la tarjeta (es decir, US)|
 |phone|recomendado| | Número de teléfono de facturación|
